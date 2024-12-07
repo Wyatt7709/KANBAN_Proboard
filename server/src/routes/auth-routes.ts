@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { User } from '../models/user.js';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcryptjs from 'bcryptjs';
 
 export const login = async (req: Request, res: Response) => {
   const { username, password } = req.body;
@@ -14,7 +14,7 @@ export const login = async (req: Request, res: Response) => {
     }
 
     // Verify password
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
       return res.status(401).json({ message: 'Invalid password' });
     }
